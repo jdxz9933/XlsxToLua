@@ -485,14 +485,17 @@ public class Utils
     /// <summary>
     /// 将某张Excel表格转换为lua table内容保存到文件
     /// </summary>
-    public static bool SaveLuaFile(string tableName, string fileName, string content)
+    public static bool SaveLuaFile(string tableName, string fileName, string content, string PrarentRoot = "")
     {
         try
         {
             string exportDirectoryPath = GetExportDirectoryPath(tableName, AppValues.ExportLuaFilePath);
+            if (!string.IsNullOrEmpty(PrarentRoot))
+            {
+                exportDirectoryPath = Path.Combine(exportDirectoryPath, PrarentRoot);
+            }
             if (Directory.Exists(exportDirectoryPath) == false)
                 Directory.CreateDirectory(exportDirectoryPath);
-
             string savePath = Utils.CombinePath(exportDirectoryPath, fileName + ".lua");
             StreamWriter writer = new StreamWriter(savePath, false, new UTF8Encoding(false));
             writer.Write(content);

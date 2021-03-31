@@ -268,6 +268,12 @@ public class AppValues
     public const string CONFIG_NAME_CHECK_TABLE = "tableCheckRule";
     // 声明对某张表格设置特殊导出规则的配置参数名
     public const string CONFIG_NAME_EXPORT = "tableExportConfig";
+
+    //by xiaoxiao
+    // 声明对某张表格设置进行导出名称枚举
+    public const string MAP_NAME_EXPORT = "mapExportConfig";
+
+
     // 声明某张表格导出到数据库中的表名
     public const string CONFIG_NAME_EXPORT_DATABASE_TABLE_NAME = "exportDatabaseTableName";
     // 声明某张表格导出到数据库中的说明信息

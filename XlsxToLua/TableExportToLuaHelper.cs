@@ -109,6 +109,65 @@ public class TableExportToLuaHelper
         }
     }
 
+
+
+
+    public static bool SpecialExportMapTableToLua(TableInfo tableInfo, string exportRule, out string errorString)
+    {
+
+        var indexFieldDefine = exportRule.Split(new char[] { '-' }, System.StringSplitOptions.RemoveEmptyEntries);
+        if (indexFieldDefine.Length < 4)
+        {
+            errorString = string.Format("导出配置\"{0}\"定义错误，用于索引的字段不能为空，请按{PathName}-{tableName}-{fieldName}-{note}的格式配置\n", exportRule);
+            return false;
+        }
+
+        string PathName = indexFieldDefine[0];
+        string tableName = indexFieldDefine[1];
+        string fieldName = indexFieldDefine[2];
+        string noteName = indexFieldDefine[3];
+
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine(string.Format("---@class {0}", tableName));
+        sb.AppendLine(tableName + " = {");
+
+        FieldInfo fieldInfo = tableInfo.GetFieldInfoByFieldName(fieldName);
+        if (fieldInfo == null)
+        {
+            errorString = string.Format("导出配置\"{0}\"定义错误，声明的索引字段\"{1}\"不存在\n", exportRule, fieldName);
+            return false;
+        }
+        if (fieldInfo.DataType != DataType.String)
+        {
+            errorString = string.Format("导出配置\"{0}\"定义错误，声明的索引字段\"{1}\"为{2}型，但只允许为string\n", exportRule, fieldName, fieldInfo.DataType);
+            return false;
+        }
+
+        FieldInfo noteInfo = tableInfo.GetFieldInfoByFieldName(noteName);
+
+
+        for (int i = 0; i < fieldInfo.Data.Count; i++)
+        {
+            string str = fieldInfo.Data[i].ToString();
+            string noteStr = noteInfo.Data[i].ToString();
+            sb.AppendLine(string.Format("    {0} = \"{1}\", -- {2}", str, str, noteStr));
+        }
+        sb.AppendLine("}");
+
+        string exportString = sb.ToString();
+        // 保存为lua文件
+        if (Utils.SaveLuaFile(tableInfo.TableName, tableName, exportString, PathName) == true)
+        {
+            errorString = null;
+            return true;
+        }
+        else
+        {
+            errorString = "保存为lua文件失败\n";
+            return false;
+        }
+    }
+
     /// <summary>
     /// 按配置的特殊索引导出方式输出lua文件（如果声明了在生成的lua文件开头以注释形式展示列信息，将生成更直观的嵌套字段信息，而不同于普通导出规则的列信息展示）
     /// </summary>

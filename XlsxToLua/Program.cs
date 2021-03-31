@@ -1070,6 +1070,20 @@ public class Program
                             }
                         }
                     }
+                    // 判断是否设置了特殊导出规则
+                    if (tableInfo.TableConfig != null && tableInfo.TableConfig.ContainsKey(AppValues.MAP_NAME_EXPORT))
+                    {
+                        List<string> inputParams = tableInfo.TableConfig[AppValues.MAP_NAME_EXPORT];
+                        foreach (string param in inputParams)
+                        {
+                            Utils.Log(string.Format("对此表格按\"{0}\"自定义规则导出luaMap文件：", param));
+                            TableExportToLuaHelper.SpecialExportMapTableToLua(tableInfo, param, out errorString);
+                            if (errorString != null)
+                                Utils.LogErrorAndExit(string.Format("导出失败：\n{0}\n", errorString));
+                            else
+                                Utils.Log("成功");
+                        }
+                    }
                     // 对表格按默认方式导出（除非通过参数设置不执行此操作）
                     if (isNeedExportOriginalTable == true)
                     {
