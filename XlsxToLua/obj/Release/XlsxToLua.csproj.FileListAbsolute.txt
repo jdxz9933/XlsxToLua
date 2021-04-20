@@ -1,0 +1,9 @@
+D:\WorkSpace\XlsxToLua\XlsxToLua\bin\Release\XlsxToLua.exe
+D:\WorkSpace\XlsxToLua\XlsxToLua\bin\Release\XlsxToLua.pdb
+D:\WorkSpace\XlsxToLua\XlsxToLua\bin\Release\LitJson.dll
+D:\WorkSpace\XlsxToLua\XlsxToLua\bin\Release\MySql.Data.dll
+D:\WorkSpace\XlsxToLua\XlsxToLua\obj\Release\XlsxToLua.csprojAssemblyReference.cache
+D:\WorkSpace\XlsxToLua\XlsxToLua\obj\Release\XlsxToLua.csproj.CoreCompileInputs.cache
+D:\WorkSpace\XlsxToLua\XlsxToLua\obj\Release\XlsxToLua.csproj.CopyComplete
+D:\WorkSpace\XlsxToLua\XlsxToLua\obj\Release\XlsxToLua.exe
+D:\WorkSpace\XlsxToLua\XlsxToLua\obj\Release\XlsxToLua.pdb
